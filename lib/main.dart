@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:busking/APIKey.dart';
+import 'package:busking/model/BusRoute.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,23 +34,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  final APIKey key = APIKey();
   var keyWord;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   void _callAPI() async {
-    var url = Uri.parse(
-        "http://apis.data.go.kr/6410000/busrouteservice/getBusRouteList?serviceKey=${key.getKey()}&keyword=$keyWord");
+    var routeIdUrl = Uri.parse(
+        "http://apis.data.go.kr/6410000/busrouteservice/getBusRouteList?serviceKey=${APIKey.getRouteKey()}&keyword=$keyWord");
 
-    var response = await http.get(url);
-    print("status: ${response.statusCode}");
-    print("body: ${response.body}");
+    var response = await http.get(routeIdUrl);
+    print(response.body);
+    Map<String, dynamic> routeData = jsonDecode(response.body);
+    // var busRoute = BusRoute.fromJson(routeData);
+    // busRoute.getRoute();
   }
 
   @override
