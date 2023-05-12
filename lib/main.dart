@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:busking/APIKey.dart';
 import 'package:busking/model/BusRoute.dart';
+import 'package:xml2json/xml2json.dart';
 
 void main() {
   runApp(const MyApp());
@@ -41,10 +42,9 @@ class _MyHomePageState extends State<MyHomePage> {
         "http://apis.data.go.kr/6410000/busrouteservice/getBusRouteList?serviceKey=${APIKey.getRouteKey()}&keyword=$keyWord");
 
     var response = await http.get(routeIdUrl);
-    print(response.body);
-    Map<String, dynamic> routeData = jsonDecode(response.body);
-    // var busRoute = BusRoute.fromJson(routeData);
-    // busRoute.getRoute();
+    final Map<String, dynamic> routeData = jsonDecode((Xml2Json()..parse(response.body)).toParker());
+    var busRoute = BusRoute.fromJson(routeData);
+    busRoute.getRoute();
   }
 
   @override

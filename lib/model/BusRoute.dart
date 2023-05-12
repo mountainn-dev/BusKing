@@ -2,18 +2,17 @@ import 'dart:convert';
 
 import 'package:busking/APIKey.dart';
 import 'package:http/http.dart' as http;
+import 'package:xml2json/xml2json.dart';
 
 class BusRoute{
-  final String routeID;
+  final String? routeID;
 
   BusRoute({
     required this.routeID
 });
 
-  factory BusRoute.fromJson(Map<String, dynamic> routeId) {
-    return BusRoute(
-      routeID: routeId['routeId']
-    );
+  factory BusRoute.fromJson(Map<String, dynamic> routeData) {
+    return BusRoute(routeID: routeData['routeId']);
   }
 
   void getRoute() async {
@@ -22,8 +21,9 @@ class BusRoute{
     );
 
     var response = await http.get(url);
-    var routeData = jsonDecode(response.body);
-    print(routeData['stationName']);
+    final routeStationData = jsonDecode((Xml2Json()..parse(response.body)).toParker());
+    print(routeStationData);
+    // print(routeStationData['stationName']);
 
   }
 }
