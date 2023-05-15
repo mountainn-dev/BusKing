@@ -44,7 +44,11 @@ class _MyHomePageState extends State<MyHomePage> {
     var response = await http.get(routeIdUrl);
     final Map<String, dynamic> routeData = jsonDecode((Xml2Json()..parse(response.body)).toParker());
     var busRoute = BusRoute.fromJson(routeData);
-    busRoute.getRoute();
+
+    final routeList = await busRoute.getList();
+    for (var s in routeList) {
+      print(s['stationName']);
+    }
   }
 
   @override

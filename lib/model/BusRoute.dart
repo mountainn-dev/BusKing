@@ -12,18 +12,17 @@ class BusRoute{
 });
 
   factory BusRoute.fromJson(Map<String, dynamic> routeData) {
-    return BusRoute(routeID: routeData['routeId']);
+    return BusRoute(routeID: routeData['response']['msgBody']['busRouteList']['routeId']);
   }
 
-  void getRoute() async {
+  Future<List<dynamic>> getList() async {
     var url = Uri.parse(
         "http://apis.data.go.kr/6410000/busrouteservice/getBusRouteStationList?serviceKey=${APIKey.getRouteKey()}&routeId=$routeID"
     );
 
     var response = await http.get(url);
     final routeStationData = jsonDecode((Xml2Json()..parse(response.body)).toParker());
-    print(routeStationData);
-    // print(routeStationData['stationName']);
 
+    return routeStationData['response']['msgBody']['busRouteStationList'];
   }
 }
