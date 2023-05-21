@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:busking/model/BusRoute.dart';
-import 'package:busking/RoutePage.dart';
+import 'package:busking/SelectionBusPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -55,9 +55,10 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               TextButton(
                   onPressed: () async {
-                    final busList = await BusRoute.callBusList(_editController.text);   // TODO: 리스트랑 같이 화면 넘기는 기능 필요
+                    final busList = await BusRoute.callBusList(_editController.text);
+                    final routeList;   // TODO: routeId 리스트도 같이 넘겨줘서 BusNumberCard Class 에서 Page 넘어갈 때 routeId 를 넘겨줘야 된다.
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => RoutePage(busList: busList)
+                        builder: (context) => SelectionBusPage(busList: busList)
                     ));
               },
                   child: Text("확인"))

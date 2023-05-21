@@ -17,7 +17,7 @@ class BusRoute{
   }
 
   static Future<List<String>> callBusList(String keyword) async {
-    // api url 이용하여 버스 json 데이터 호출
+    // user keyword 이용하여 버스 목록 json 데이터 호출 및 리스트 추출
     Uri url;
     Map<String, dynamic> jsonBusData;
     List<dynamic> busData;
@@ -32,5 +32,24 @@ class BusRoute{
     }
 
     return busList;
+  }
+  
+  static Future<List<String>> callStationList(String routeId) async {
+    // routeId 이용하여 버스 정류장 데이터 호출 및 리스트 추출
+    Uri url;
+    Map<String, dynamic> jsonRouteData;
+    List<dynamic> routeData;
+    final List<String> stationList = [];
+    
+    url = Uri.parse(APIUrl.getRouteListUrl(routeId));
+    var response = await http.get(url);
+    jsonRouteData = jsonDecode((Xml2Json()..parse(response.body)).toParker());
+    routeData = JsonDecode.findListByKeyInMap("busRouteStationList", jsonRouteData) ?? [];
+    print(jsonRouteData);
+    for (var station in routeData) {
+      stationList.add(station["stationName"]);
+    }
+
+    return stationList;
   }
 }

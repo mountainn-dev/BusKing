@@ -1,17 +1,17 @@
-import 'package:busking/src/MyListViewCard.dart';
+import 'package:busking/src/BusNumberCard.dart';
 import 'package:flutter/material.dart';
 import 'package:busking/src/MyScrollBehavior.dart';
 
-class RoutePage extends StatefulWidget {
+class SelectionBusPage extends StatefulWidget {
   final List<String> busList;
 
-  const RoutePage({Key? key, required this.busList}) : super(key: key);
+  const SelectionBusPage({Key? key, required this.busList}) : super(key: key);
 
   @override
-  State<RoutePage> createState() => _RoutePageState();
+  State<SelectionBusPage> createState() => _SelectionBusPageState();
 }
 
-class _RoutePageState extends State<RoutePage> {
+class _SelectionBusPageState extends State<SelectionBusPage> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -26,7 +26,7 @@ class _RoutePageState extends State<RoutePage> {
                   physics: BouncingScrollPhysics(),
                   itemCount: widget.busList.length,
                   itemBuilder: (context, index) {
-                    return MyListViewCard(busList: widget.busList, index: index);
+                    return BusNumberCard(busList: widget.busList, index: index);
                   }
               ),
             ),
@@ -35,4 +35,6 @@ class _RoutePageState extends State<RoutePage> {
       ],
     );
   }
+
+
 }
