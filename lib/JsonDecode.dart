@@ -5,6 +5,7 @@ class JsonDecode{
 
   // key 값을 인자로 하여 value 를 탐색한다. 이 때, 순환함수를 사용하기 때문에 리턴 시 null check를
   // 하지 않고, 외부에서 체크하도록 nullable 값을 그대로 넘긴다.
+  // TODO: keyword 사용 결과 단일 route 가 나올 경우 list 가 아닌 바로 string 으로 가야 한다. 관련 기능 제공 필요
   static String? findStringByKeyInMap(String k, Map<String, dynamic> m) {
     String? result;
 
