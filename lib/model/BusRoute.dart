@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:busking/APIKey.dart';
+import 'package:busking/APIUrl.dart';
 import 'package:http/http.dart' as http;
 import 'package:xml2json/xml2json.dart';
+import 'package:busking/JsonDecode.dart';
 
 class BusRoute{
   final String? routeID;
@@ -11,30 +13,24 @@ class BusRoute{
 });
 
   factory BusRoute.fromJson(Map<String, dynamic> routeData) {
-    return BusRoute(routeID: routeData['response']['msgBody']['busRouteList']['routeId']);
+    return BusRoute(routeID: JsonDecode.findStringByKeyInMap('routeId', routeData));
   }
 
-  Future<List<dynamic>> getList() async {
-    var url = Uri.parse(
-        "http://apis.data.go.kr/6410000/busrouteservice/getBusRouteStationList?serviceKey=${APIKey.getRouteKey()}&routeId=$routeID"
-    );
+  static Future<List<String>> callBusList(String keyword) async {
+    // api url 이용하여 버스 json 데이터 호출
+    Uri url;
+    Map<String, dynamic> jsonBusData;
+    List<dynamic> busData;
+    final List<String> busList = [];
 
+    url = Uri.parse(APIUrl.getBusListUrl(keyword));
     var response = await http.get(url);
-    final routeStationData = jsonDecode((Xml2Json()..parse(response.body)).toParker());
-
-    return routeStationData['response']['msgBody']['busRouteStationList'];
-  }
-
-  String? findValueByKeyInMap(String k, Map<String, dynamic> m) {
-    String? result;
-    final type = (jsonDecode('{"A" : "B"}')).runtimeType;   // _Map<String, dynamic>
-
-    for (var key in m.keys) {
-      if (m[key].runtimeType == type) result = findValueByKeyInMap(k, m[key]);   // Map 형태의 value 일 경우 순환함수
-      else if (m[key].runtimeType == String && key == k) result = m[key];   // String value 이고 targetKey 와 일치할 경우
-      if (result != null) break;
+    jsonBusData = jsonDecode((Xml2Json()..parse(response.body)).toParker());
+    busData = JsonDecode.findListByKeyInMap("busRouteList", jsonBusData) ?? [];
+    for(var bus in busData){
+      busList.add(bus["routeName"]);
     }
 
-    return result;
+    return busList;
   }
 }
