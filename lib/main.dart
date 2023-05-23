@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:busking/model/BusRoute.dart';
-import 'package:busking/SelectionBusPage.dart';
+import 'package:busking/Screen/SelectionBusPage.dart';
 
 void main() {
   runApp(const MyApp());

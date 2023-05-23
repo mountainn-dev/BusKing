@@ -34,9 +34,8 @@ class JsonDecode{
     Map<String, dynamic>? result;
 
     for (var key in m.keys) {
-      if (m[key].runtimeType != _mapType
-          || (m[key].runtimeType == _mapType && key != k)) result = findMapByKeyInMap(k, m[key]);
-      else if (key == k) result = m[key];   // Map 형태의 value 이고 targetKey 와 일치할 경우
+      if (m[key].runtimeType == _mapType && key != k) result = findMapByKeyInMap(k, m[key]);
+      else if (m[key].runtimeType == _mapType && key == k) result = m[key];   // Map 형태의 value 이고 targetKey 와 일치할 경우
       if (result != null) break;
     }
 

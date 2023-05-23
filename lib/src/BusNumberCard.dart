@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:busking/SelectionStationPage.dart';
+import 'package:busking/Screen/SelectionStationPage.dart';
 
 class BusNumberCard extends StatefulWidget {
   final List<String> busList;
