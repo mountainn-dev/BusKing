@@ -61,13 +61,10 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               TextButton(
                   onPressed: () async {
-                    var url = Uri.parse(APIUrl.getBusListUrl("720-2"));
-                    var response = await http.get(url);
-                    print(response.body);
                     final busList = await BusRoute.callBusList(_editController.text);
-                    final routeList;   // TODO: routeId 리스트도 같이 넘겨줘서 BusNumberCard Class 에서 Page 넘어갈 때 routeId 를 넘겨줘야 된다.
+                    final routeIdList = await BusRoute.callRouteIdList(_editController.text);   // TODO: routeId 리스트도 같이 넘겨줘서 BusNumberCard Class 에서 Page 넘어갈 때 routeId 를 넘겨줘야 된다.
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => SelectionBusPage(busList: busList)
+                        builder: (context) => SelectionBusPage(busList: busList, routeIdList: routeIdList)
                     ));
               },
                   child: Text("확인"))

@@ -3,9 +3,10 @@ import 'package:busking/Screen/SelectionStationPage.dart';
 
 class BusNumberCard extends StatefulWidget {
   final List<String> busList;
+  final List<String> routeIdList;
   final int index;
 
-  const BusNumberCard({Key? key, required this.busList, required this.index}) : super(key: key);
+  const BusNumberCard({Key? key, required this.busList, required this.routeIdList, required this.index}) : super(key: key);
 
   @override
   State<BusNumberCard> createState() => _BusNumberCardState();
@@ -27,7 +28,7 @@ class _BusNumberCardState extends State<BusNumberCard> {
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => SelectionStationPage(
-                    routeId: widget.busList[widget.index]
+                    routeId: widget.routeIdList[widget.index]
                 )
             ));
           },

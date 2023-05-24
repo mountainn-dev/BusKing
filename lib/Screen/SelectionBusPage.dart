@@ -4,8 +4,9 @@ import 'package:busking/src/MyScrollBehavior.dart';
 
 class SelectionBusPage extends StatefulWidget {
   final List<String> busList;
+  final List<String> routeIdList;
 
-  const SelectionBusPage({Key? key, required this.busList}) : super(key: key);
+  const SelectionBusPage({Key? key, required this.busList, required this.routeIdList}) : super(key: key);
 
   @override
   State<SelectionBusPage> createState() => _SelectionBusPageState();
@@ -26,7 +27,7 @@ class _SelectionBusPageState extends State<SelectionBusPage> {
                   physics: BouncingScrollPhysics(),
                   itemCount: widget.busList.length,
                   itemBuilder: (context, index) {
-                    return BusNumberCard(busList: widget.busList, index: index);
+                    return BusNumberCard(busList: widget.busList, routeIdList: widget.routeIdList, index: index);
                   }
               ),
             ),
