@@ -1,6 +1,12 @@
+import 'dart:convert';
+
+import 'package:busking/JsonDecode.dart';
 import 'package:flutter/material.dart';
 import 'package:busking/model/BusRoute.dart';
 import 'package:busking/Screen/SelectionBusPage.dart';
+import 'package:http/http.dart' as http;
+
+import 'APIUrl.dart';
 
 void main() {
   runApp(const MyApp());
@@ -55,6 +61,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               TextButton(
                   onPressed: () async {
+                    var url = Uri.parse(APIUrl.getBusListUrl("720-2"));
+                    var response = await http.get(url);
+                    print(response.body);
                     final busList = await BusRoute.callBusList(_editController.text);
                     final routeList;   // TODO: routeId 리스트도 같이 넘겨줘서 BusNumberCard Class 에서 Page 넘어갈 때 routeId 를 넘겨줘야 된다.
                     Navigator.of(context).push(MaterialPageRoute(
