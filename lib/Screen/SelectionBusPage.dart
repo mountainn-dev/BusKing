@@ -1,39 +1,60 @@
 import 'package:busking/src/BusNumberCard.dart';
 import 'package:flutter/material.dart';
 import 'package:busking/src/MyScrollBehavior.dart';
+import 'package:provider/provider.dart';
 
 class SelectionBusPage extends StatefulWidget {
-  final List<String> busList;
-  final List<String> routeIdList;
 
-  const SelectionBusPage({Key? key, required this.busList, required this.routeIdList}) : super(key: key);
+  const SelectionBusPage({Key? key}) : super(key: key);
 
   @override
   State<SelectionBusPage> createState() => _SelectionBusPageState();
 }
 
 class _SelectionBusPageState extends State<SelectionBusPage> {
+  final _editController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Expanded(
-          child: Padding(
-            padding: EdgeInsets.all(10),
-            child: ScrollConfiguration(
-              behavior: MyScrollBehavior(),
-              child: ListView.builder(
-                  physics: BouncingScrollPhysics(),
-                  itemCount: widget.busList.length,
-                  itemBuilder: (context, index) {
-                    return BusNumberCard(busList: widget.busList, routeIdList: widget.routeIdList, index: index);
-                  }
+    return ChangeNotifierProvider(
+      create: (_) => BusListProvider(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("BusKing"),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextField(
+                controller: _editController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: "BusNumber"
+                ),
               ),
-            ),
+              TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    "확인"
+                  )),
+              Expanded(
+                child: ScrollConfiguration(
+                  behavior: MyScrollBehavior(),
+                  child: ListView.builder(
+                      physics: BouncingScrollPhysics(),
+                      itemCount: widget.busList.length,
+                      itemBuilder: (context, index) {
+                        return BusNumberCard(busList: widget.busList, routeIdList: widget.routeIdList, index: index);
+                      }
+                  ),
+                ),
+              )
+            ],
           ),
-        )
-      ],
+        ),
+      ),
     );
   }
 
