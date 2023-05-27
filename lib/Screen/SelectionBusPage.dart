@@ -1,3 +1,4 @@
+import 'package:busking/ViewModel/BusRouteViewModel.dart';
 import 'package:busking/src/BusNumberCard.dart';
 import 'package:flutter/material.dart';
 import 'package:busking/src/MyScrollBehavior.dart';
@@ -17,7 +18,7 @@ class _SelectionBusPageState extends State<SelectionBusPage> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => BusListProvider(),
+      create: (_) => BusRouteViewModel(),
       child: Scaffold(
         appBar: AppBar(
           title: Text("BusKing"),
