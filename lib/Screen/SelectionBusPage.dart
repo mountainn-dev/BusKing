@@ -1,63 +1,70 @@
 import 'package:busking/ViewModel/BusRouteViewModel.dart';
+import 'package:busking/model/BusRoute.dart';
 import 'package:busking/src/BusNumberCard.dart';
 import 'package:flutter/material.dart';
 import 'package:busking/src/MyScrollBehavior.dart';
 import 'package:provider/provider.dart';
 
-class SelectionBusPage extends StatefulWidget {
+class SelectionBusPage extends StatelessWidget {
 
-  const SelectionBusPage({Key? key}) : super(key: key);
-
-  @override
-  State<SelectionBusPage> createState() => _SelectionBusPageState();
-}
-
-class _SelectionBusPageState extends State<SelectionBusPage> {
-  final _editController = TextEditingController();
+  SelectionBusPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => BusRouteViewModel(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text("BusKing"),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextField(
-                controller: _editController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "BusNumber"
+      child: BusPage(),
+    );
+  }
+}
+
+class BusPage extends StatelessWidget {
+
+  final _editController = TextEditingController();
+  late BusRouteViewModel viewModel;
+
+  @override
+  Widget build(BuildContext context) {
+    viewModel = Provider.of<BusRouteViewModel>(context);
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("BusKing"),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextField(
+              controller: _editController,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: "BusNumber"
+              ),
+            ),
+            TextButton(
+                onPressed: () {
+                  viewModel.setKeyword(_editController.text);
+                  context.read<BusRouteViewModel>().getBusData();
+                },
+                child: Text(
+                  "확인"
+                )),
+            (viewModel.busList != null) ? Expanded(
+              child: ScrollConfiguration(
+                behavior: MyScrollBehavior(),
+                child: ListView.builder(
+                    physics: BouncingScrollPhysics(),
+                    itemCount: viewModel.busList.length,
+                    itemBuilder: (context, index) {
+                      return BusNumberCard(busList: viewModel.busList, routeIdList: viewModel.routeIdList, index: index);
+                    }
                 ),
               ),
-              TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    "확인"
-                  )),
-              Expanded(
-                child: ScrollConfiguration(
-                  behavior: MyScrollBehavior(),
-                  child: ListView.builder(
-                      physics: BouncingScrollPhysics(),
-                      itemCount: widget.busList.length,
-                      itemBuilder: (context, index) {
-                        return BusNumberCard(busList: widget.busList, routeIdList: widget.routeIdList, index: index);
-                      }
-                  ),
-                ),
-              )
-            ],
-          ),
+            ) : Text("hello")
+          ],
         ),
       ),
     );
   }
-
-
 }

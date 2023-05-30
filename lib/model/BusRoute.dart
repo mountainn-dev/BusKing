@@ -1,76 +1,11 @@
-import 'dart:convert';
-import 'package:busking/APIUrl.dart';
-import 'package:http/http.dart' as http;
-import 'package:xml2json/xml2json.dart';
-import 'package:busking/JsonDecode.dart';
+import 'package:busking/DataSource/JsonDecode.dart';
 
 class BusRoute{
-  final String? routeID;
+  final List<String> busList;
+  final List<String> routeIdList;
 
   BusRoute({
-    required this.routeID
+    required this.busList,
+    required this.routeIdList
 });
-
-  factory BusRoute.fromJson(Map<String, dynamic> routeData) {
-    return BusRoute(routeID: JsonDecode.findStringByKeyInMap('routeId', routeData));
-  }
-
-  static Future<List<String>> callBusList(String keyword) async {
-    // user keyword 이용하여 버스 목록 json 데이터 호출 및 리스트 추출
-    // url 및 data 변수들은 안전성을 고려하여 static 으로 승격하지 않았다.
-    List<dynamic> busData = await _callBusData(keyword);
-    final List<String> busList = [];
-
-    for(var bus in busData){
-      busList.add(bus["routeName"]);
-    }
-
-    return busList;
-  }
-  
-  static Future<List<String>> callRouteIdList(String keyword) async {
-    List<dynamic> busData = await _callBusData(keyword);
-    final List<String> routeIdList = [];
-
-    for(var bus in busData){
-      routeIdList.add(bus["routeId"]);
-    }
-
-    return routeIdList;
-  }
-
-  static Future<List<dynamic>> _callBusData(String keyword) async {
-    Uri url;
-    Map<String, dynamic> jsonBusData;
-    List<dynamic> busData;
-
-
-    url = Uri.parse(APIUrl.getBusListUrl(keyword));
-    var response = await http.get(url);
-    jsonBusData = jsonDecode((Xml2Json()..parse(response.body)).toParker());
-    busData = JsonDecode.findListByKeyInMap("busRouteList", jsonBusData)
-        ?? [JsonDecode.findMapByKeyInMap("busRouteList", jsonBusData)
-            ?? {"routeName" : "버스가 존재하지 않습니다."}];
-
-    return busData;
-  }
-  
-  static Future<List<String>> callStationList(String routeId) async {
-    // routeId 이용하여 버스 정류장 데이터 호출 및 리스트 추출
-    Uri url;
-    Map<String, dynamic> jsonRouteData;
-    List<dynamic> routeData;
-    final List<String> stationList = [];
-    
-    url = Uri.parse(APIUrl.getRouteListUrl(routeId));
-    var response = await http.get(url);
-    jsonRouteData = jsonDecode((Xml2Json()..parse(response.body)).toParker());
-    routeData = JsonDecode.findListByKeyInMap("busRouteStationList", jsonRouteData) ?? [];
-
-    for (var station in routeData) {
-      stationList.add(station["stationName"]);
-    }
-
-    return stationList;
-  }
 }
