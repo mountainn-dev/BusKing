@@ -5,15 +5,15 @@ class BusNumberCard extends StatefulWidget {
   final String routeName;
   final String routeId;
 
-  const BusNumberCard({Key? key, required this.routeName, required this.routeId}) : super(key: key);
+  const BusNumberCard({
+    Key? key, required this.routeName, required this.routeId
+  }) : super(key: key);
 
   @override
   State<BusNumberCard> createState() => _BusNumberCardState();
 }
 
 class _BusNumberCardState extends State<BusNumberCard> {
-  final _editController = TextEditingController();
-  
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -25,11 +25,11 @@ class _BusNumberCardState extends State<BusNumberCard> {
           ),
           ),
           onTap: () {
-            // Navigator.of(context).push(MaterialPageRoute(
-            //     builder: (context) => SelectionStationPage(
-            //         routeId: widget.routeIdList[widget.index]
-            //     )
-            // ));
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => SelectionStationPage(
+                    routeId: widget.routeId
+                )
+            ));
           },
         )
       ),

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-class BusRouteCard extends StatefulWidget {
+class BusStationCard extends StatefulWidget {
   final List<String> stationList;
   final int index;
 
-  const BusRouteCard({Key? key, required this.stationList, required this.index}) : super(key: key);
+  const BusStationCard({Key? key, required this.stationList, required this.index}) : super(key: key);
 
   @override
-  State<BusRouteCard> createState() => _BusRouteCardState();
+  State<BusStationCard> createState() => _BusStationCardState();
 }
 
-class _BusRouteCardState extends State<BusRouteCard> {
+class _BusStationCardState extends State<BusStationCard> {
   @override
   Widget build(BuildContext context) {
     return Card(

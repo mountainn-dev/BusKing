@@ -1,5 +1,4 @@
-import 'package:busking/ViewModel/BusRouteViewModel.dart';
-import 'package:busking/model/BusRoute.dart';
+import 'package:busking/ViewModel/BusViewModel.dart';
 import 'package:busking/src/BusNumberCard.dart';
 import 'package:flutter/material.dart';
 import 'package:busking/src/MyScrollBehavior.dart';
@@ -12,7 +11,7 @@ class SelectionBusPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => BusRouteViewModel(),
+      create: (_) => BusViewModel(),
       child: BusPage(),
     );
   }
@@ -21,11 +20,11 @@ class SelectionBusPage extends StatelessWidget {
 class BusPage extends StatelessWidget {
 
   final _editController = TextEditingController();
-  late BusRouteViewModel viewModel;
+  late BusViewModel viewModel;
 
   @override
   Widget build(BuildContext context) {
-    viewModel = Provider.of<BusRouteViewModel>(context);
+    viewModel = Provider.of<BusViewModel>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("BusKing"),
@@ -45,7 +44,7 @@ class BusPage extends StatelessWidget {
             TextButton(
                 onPressed: () {
                   viewModel.setKeyword(_editController.text);
-                  context.read<BusRouteViewModel>().loadBus();
+                  context.read<BusViewModel>().loadBus();
                 },
                 child: Text(
                   "확인"
@@ -64,7 +63,7 @@ class BusPage extends StatelessWidget {
                     }
                 ),
               ),
-            ) : Text("hello")
+            ) : Text("버스 번호를 입력해주세요.")
           ],
         ),
       ),
