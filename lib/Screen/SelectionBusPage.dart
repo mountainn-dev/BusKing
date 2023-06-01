@@ -45,19 +45,22 @@ class BusPage extends StatelessWidget {
             TextButton(
                 onPressed: () {
                   viewModel.setKeyword(_editController.text);
-                  context.read<BusRouteViewModel>().getBusData();
+                  context.read<BusRouteViewModel>().loadBus();
                 },
                 child: Text(
                   "확인"
                 )),
-            (viewModel.busList != null) ? Expanded(
+            (viewModel.bus.isNotEmpty) ? Expanded(
               child: ScrollConfiguration(
                 behavior: MyScrollBehavior(),
                 child: ListView.builder(
                     physics: BouncingScrollPhysics(),
-                    itemCount: viewModel.busList.length,
+                    itemCount: viewModel.bus.length,
                     itemBuilder: (context, index) {
-                      return BusNumberCard(busList: viewModel.busList, routeIdList: viewModel.routeIdList, index: index);
+                      return BusNumberCard(
+                          routeName: viewModel.bus[index].routeName,
+                          routeId: viewModel.bus[index].routeId
+                      );
                     }
                 ),
               ),

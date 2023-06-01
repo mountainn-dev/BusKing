@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:busking/Screen/SelectionStationPage.dart';
 
 class BusNumberCard extends StatefulWidget {
-  final List<String> busList;
-  final List<String> routeIdList;
-  final int index;
+  final String routeName;
+  final String routeId;
 
-  const BusNumberCard({Key? key, required this.busList, required this.routeIdList, required this.index}) : super(key: key);
+  const BusNumberCard({Key? key, required this.routeName, required this.routeId}) : super(key: key);
 
   @override
   State<BusNumberCard> createState() => _BusNumberCardState();
@@ -20,7 +19,7 @@ class _BusNumberCardState extends State<BusNumberCard> {
     return Card(
       child: Center(
         child: ListTile(
-          title: Text(widget.busList[widget.index],
+          title: Text(widget.routeName,
           style: TextStyle(
             fontSize: 30
           ),

@@ -1,13 +1,19 @@
 import 'package:busking/DataSource/JsonDecode.dart';
 
 class BusRoute{
-  // XML 타입의 API 데이터를 JSON 으로 변환 후 리스트로 매핑하는 과정이 복잡하여,
-  // remoteDataSource 에서 매핑이 완성된 데이터를 BusRoute 모델에 전달하게끔 코드를 구성했다.
-  final List<String> busList;
-  final List<String> routeIdList;
+  // BusRoute 모델은 버스 번호와 노선 id 로 구성
+  final String routeName;
+  final String routeId;
 
   BusRoute({
-    required this.busList,
-    required this.routeIdList
-});
+    required this.routeName,
+    required this.routeId
+  });
+
+  factory BusRoute.fromJson(Map<String, dynamic> json) {
+    return BusRoute(
+        routeName: JsonDecode.findStringByKey("routeName", json),
+        routeId: JsonDecode.findStringByKey("routeId", json)
+    );
+  }
 }
