@@ -26,11 +26,11 @@ class _BusNumberCardState extends State<BusNumberCard> {
           ),
           ),
           onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => SelectionStationPage(
-                    routeId: widget.routeIdList[widget.index]
-                )
-            ));
+            // Navigator.of(context).push(MaterialPageRoute(
+            //     builder: (context) => SelectionStationPage(
+            //         routeId: widget.routeIdList[widget.index]
+            //     )
+            // ));
           },
         )
       ),
