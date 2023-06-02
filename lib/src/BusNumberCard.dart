@@ -4,9 +4,13 @@ import 'package:busking/Screen/SelectionStationPage.dart';
 class BusNumberCard extends StatelessWidget {
   final String routeName;
   final String routeId;
+  final String startStationName;
+  final String endStationName;
 
   const BusNumberCard({
-    Key? key, required this.routeName, required this.routeId
+    Key? key,
+    required this.routeName, required this.routeId,
+    required this.startStationName, required this.endStationName
   }) : super(key: key);
 
   @override
@@ -14,9 +18,9 @@ class BusNumberCard extends StatelessWidget {
     return Card(
       child: Center(
         child: ListTile(
-          title: Text(routeName,
+          title: Text("$routeName ($startStationName - $endStationName)",
           style: TextStyle(
-            fontSize: 30
+            fontSize: 20
           ),
           ),
           onTap: () {

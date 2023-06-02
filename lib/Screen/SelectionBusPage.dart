@@ -57,8 +57,10 @@ class BusPage extends StatelessWidget {
                     itemCount: viewModel.bus.length,
                     itemBuilder: (context, index) {
                       return BusNumberCard(
-                          routeName: viewModel.bus[index].routeName,
-                          routeId: viewModel.bus[index].routeId
+                        routeName: viewModel.bus[index].routeName,
+                        routeId: viewModel.bus[index].routeId,
+                        startStationName: viewModel.bus[index].startStationName,
+                        endStationName: viewModel.bus[index].endStationName
                       );
                     }
                 ),
