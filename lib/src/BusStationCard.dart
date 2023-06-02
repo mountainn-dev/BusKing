@@ -15,7 +15,7 @@ class BusStationCard extends StatelessWidget {
           child: ListTile(
             title: Text(stationName,
               style: TextStyle(
-                  fontSize: 30
+                  fontSize: 20
               ),
             ),
             onTap: () {

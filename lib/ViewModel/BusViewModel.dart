@@ -8,7 +8,7 @@ class BusViewModel with ChangeNotifier {
   late final RemoteRepository _remoteRepository;
   late List<Bus> _bus = [];
   List<Bus> get bus => _bus;
-  var _keyword = "";
+  late String _keyword;
 
   BusViewModel() {
     _remoteRepository = RemoteRepository();
