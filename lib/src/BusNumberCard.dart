@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:busking/Screen/SelectionStationPage.dart';
 
-class BusNumberCard extends StatefulWidget {
+class BusNumberCard extends StatelessWidget {
   final String routeName;
   final String routeId;
 
@@ -10,16 +10,11 @@ class BusNumberCard extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<BusNumberCard> createState() => _BusNumberCardState();
-}
-
-class _BusNumberCardState extends State<BusNumberCard> {
-  @override
   Widget build(BuildContext context) {
     return Card(
       child: Center(
         child: ListTile(
-          title: Text(widget.routeName,
+          title: Text(routeName,
           style: TextStyle(
             fontSize: 30
           ),
@@ -27,7 +22,7 @@ class _BusNumberCardState extends State<BusNumberCard> {
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => SelectionStationPage(
-                    routeId: widget.routeId
+                    routeId: routeId
                 )
             ));
           },

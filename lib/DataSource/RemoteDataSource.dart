@@ -7,7 +7,7 @@ import 'package:busking/model/Bus.dart';
 import 'package:busking/model/Station.dart';
 
 class RemoteDataSource {
-  // BusRoute 모델 리스트를 가진 busList 반환
+  // Bus 목록 반환
   Future<List<Bus>> getBus(String keyword) async {
     List<dynamic> busData = await _callBusData(keyword);
     List<Bus> busList = [];
@@ -17,7 +17,7 @@ class RemoteDataSource {
 
     return busList;
   }
-
+  // 정류장 목록 반환
   Future<List<Station>> getStation(String routeId) async {
     List<dynamic> stationData = await _callStationList(routeId);
     List<Station> stationList = [];
@@ -58,21 +58,22 @@ class RemoteDataSource {
   }
 
   Future<List<dynamic>> _callStationList(String routeId) async {
-    // 노선 id를 이용하여 해당 버스의 노선 목록 호출
+    // 노선 id를 이용하여 해당 버스의 정류장 목록을 가진 stationData 반환
     Uri url;
-    Map<String, dynamic> jsonRouteData;
+    Map<String, dynamic> jsonStationData;
     List<dynamic> stationData;
     url = Uri.parse(APIUrl.getStationListUrl(routeId));
     var response = await http.get(url);
-    jsonRouteData = jsonDecode((Xml2Json()..parse(response.body)).toParker());
-    switch(JsonDecode.findStringByKey("resultCode", jsonRouteData)) {
+    jsonStationData = jsonDecode((Xml2Json()..parse(response.body)).toParker());
+
+    switch(JsonDecode.findStringByKey("resultCode", jsonStationData)) {
       case "0": {
         // 정류장은 항상 목록으로 호출되기 때문에 버스 data 와 다르게 별도 분기코드를 진행하지 않는다.
-        stationData = JsonDecode.findListByKey("busRouteStationList", jsonRouteData);
+        stationData = JsonDecode.findListByKey("busRouteStationList", jsonStationData);
         break;
       }
       default: {
-        stationData = [{"stationName" : "정류장 정보가 존재하지 않습니다.", "routeId" : "-"}];
+        stationData = [{"stationName" : "정류장 정보가 존재하지 않습니다.", "stationId" : "-"}];
       }
     }
 

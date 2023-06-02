@@ -18,7 +18,6 @@ class SelectionBusPage extends StatelessWidget {
 }
 
 class BusPage extends StatelessWidget {
-
   final _editController = TextEditingController();
   late BusViewModel viewModel;
 
@@ -49,7 +48,8 @@ class BusPage extends StatelessWidget {
                 child: Text(
                   "확인"
                 )),
-            (viewModel.bus.isNotEmpty) ? Expanded(
+            (viewModel.bus.isNotEmpty)
+                ? Expanded(
               child: ScrollConfiguration(
                 behavior: MyScrollBehavior(),
                 child: ListView.builder(

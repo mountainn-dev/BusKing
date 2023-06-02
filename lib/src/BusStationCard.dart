@@ -1,24 +1,21 @@
 import 'package:flutter/material.dart';
 
-class BusStationCard extends StatefulWidget {
-  final List<String> stationList;
-  final int index;
+class BusStationCard extends StatelessWidget {
+  final String stationName;
+  final String stationId;
 
-  const BusStationCard({Key? key, required this.stationList, required this.index}) : super(key: key);
+  const BusStationCard({
+    Key? key, required this.stationName, required this.stationId
+  }) : super(key: key);
 
-  @override
-  State<BusStationCard> createState() => _BusStationCardState();
-}
-
-class _BusStationCardState extends State<BusStationCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
       child: Center(
           child: ListTile(
-            title: Text(widget.stationList[widget.index],
+            title: Text(stationName,
               style: TextStyle(
-                  fontSize: 10
+                  fontSize: 30
               ),
             ),
             onTap: () {
