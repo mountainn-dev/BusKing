@@ -7,7 +7,7 @@ class Station{
 
   Station({
     required this.stationName,
-    required this.stationId
+    required this.stationId,
   });
 
   factory Station.fromJson(Map<String, dynamic> json) {

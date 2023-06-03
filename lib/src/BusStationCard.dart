@@ -5,7 +5,9 @@ class BusStationCard extends StatelessWidget {
   final String stationId;
 
   const BusStationCard({
-    Key? key, required this.stationName, required this.stationId
+    Key? key,
+    required this.stationName,
+    required this.stationId
   }) : super(key: key);
 
   @override
