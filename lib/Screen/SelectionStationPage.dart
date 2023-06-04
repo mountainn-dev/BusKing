@@ -53,6 +53,38 @@ class StationPage extends StatelessWidget {
                 ),
               ),
             ),
+
+            // TODO: 화면 하단 정류장 선택 결과 표시 부분
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Container(
+                        width: 150,
+                        color: Colors.grey.shade400,
+                        child: Center(child: Text("출발")),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Container(
+                        width: 150,
+                        color: Colors.grey.shade400,
+                        child: Center(child: Text("도착")),
+                      ),
+                    )
+                  ],
+                ),
+                TextButton(
+                  onPressed: () {  },
+                  child: Text("확인"),
+                )
+              ],
+            )
           ],
         )
       ),
