@@ -8,7 +8,11 @@ class StationViewModel with ChangeNotifier {
   late final RemoteRepository _remoteRepository;
   late final String _routeId;
   late List<Station> _station = [];
+  late Station _start;
+  late Station _end;
   List<Station> get station => _station;
+  Station get start => _start;
+  Station get end => _end;
 
   StationViewModel(String routeId) {
     // station view 의 경우 이전 단계에서 선택된 버스를 기반으로 구성되므로, 생성자에
@@ -22,4 +26,5 @@ class StationViewModel with ChangeNotifier {
     _station = await _remoteRepository.getStation(_routeId);
     notifyListeners();
   }
+  
 }

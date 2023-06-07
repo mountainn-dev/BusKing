@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:busking/model/Station.dart';
 
 class BusStationCard extends StatelessWidget {
-  final String stationName;
-  final String stationId;
+  final Station station;
 
   const BusStationCard({
     Key? key,
-    required this.stationName,
-    required this.stationId
+    required this.station
   }) : super(key: key);
 
   @override
@@ -15,7 +14,7 @@ class BusStationCard extends StatelessWidget {
     return Card(
       child: Center(
           child: ListTile(
-            title: Text(stationName,
+            title: Text(station.stationName,
               style: TextStyle(
                   fontSize: 20
               ),

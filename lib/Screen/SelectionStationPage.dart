@@ -47,8 +47,7 @@ class StationPage extends StatelessWidget {
                     itemCount: viewModel.station.length,
                     itemBuilder: (context, index) {
                       return BusStationCard(
-                        stationName: viewModel.station[index].stationName,
-                        stationId: viewModel.station[index].stationId
+                        station: viewModel.station[index]
                       );},
                 ),
               ),
@@ -66,7 +65,7 @@ class StationPage extends StatelessWidget {
                       child: Container(
                         width: 150,
                         color: Colors.grey.shade400,
-                        child: Center(child: Text("출발")),
+                        child: Center(child: Text(viewModel.start.stationName)),
                       ),
                     ),
                     Padding(
@@ -74,7 +73,7 @@ class StationPage extends StatelessWidget {
                       child: Container(
                         width: 150,
                         color: Colors.grey.shade400,
-                        child: Center(child: Text("도착")),
+                        child: Center(child: Text(viewModel.end.stationName)),
                       ),
                     )
                   ],
