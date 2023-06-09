@@ -1,7 +1,7 @@
 import 'package:busking/DataSource/JsonDecode.dart';
 
 class Bus{
-  // Bus 모델은 버스 번호와 노선 id 로 구성
+  // Bus 모델은 버스 번호와 노선 id, 기-종점 으로 구성
   final String routeName;
   final String routeId;
   final String startStationName;

@@ -13,7 +13,7 @@ class SelectionStationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<StationViewModel>(
+    return ChangeNotifierProvider(
         create: (_) => StationViewModel(routeId),
         child: StationPage(routeId: routeId)
     );
@@ -65,7 +65,11 @@ class StationPage extends StatelessWidget {
                       child: Container(
                         width: 150,
                         color: Colors.grey.shade400,
-                        child: Center(child: Text(viewModel.start.stationName)),
+                        // 사용자 선택 출발 정류장
+                        child: Center(child: (viewModel.isStartSelected)
+                            ? Text("${viewModel.start.stationName}")
+                            : Text("")
+                        ),
                       ),
                     ),
                     Padding(
@@ -73,7 +77,11 @@ class StationPage extends StatelessWidget {
                       child: Container(
                         width: 150,
                         color: Colors.grey.shade400,
-                        child: Center(child: Text(viewModel.end.stationName)),
+                        // 사용자 선택 도착 정류장
+                        child: Center(child: (viewModel.isEndSelected)
+                            ? Text("${viewModel.end.stationName}")
+                            : Text("")
+                        ),
                       ),
                     )
                   ],

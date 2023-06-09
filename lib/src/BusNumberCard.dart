@@ -1,32 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:busking/Screen/SelectionStationPage.dart';
+import 'package:busking/model/Bus.dart';
 
 class BusNumberCard extends StatelessWidget {
-  final String routeName;
-  final String routeId;
-  final String startStationName;
-  final String endStationName;
+  final Bus bus;
 
-  const BusNumberCard({
-    Key? key,
-    required this.routeName, required this.routeId,
-    required this.startStationName, required this.endStationName
-  }) : super(key: key);
+  const BusNumberCard({Key? key, required this.bus}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: Center(
         child: ListTile(
-          title: Text("$routeName ($startStationName - $endStationName)",
+          // 버스명, 버스 기-종점
+          title: Text("${bus.routeName} (${bus.startStationName} - ${bus.endStationName})",
           style: TextStyle(
             fontSize: 20
           ),
           ),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => SelectionStationPage(
-                    routeId: routeId
+                builder: (_) => SelectionStationPage(
+                    routeId: bus.routeId
                 )
             ));
           },
