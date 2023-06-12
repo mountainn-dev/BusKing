@@ -12,11 +12,13 @@ class StationViewModel with ChangeNotifier {
   late Station _end;
   var _isStartSelected = false;
   var _isEndSelected = false;
+  var _cardColor = Colors.white;
   List<Station> get station => _station;
   Station get start => _start;
   Station get end => _end;
   bool get isStartSelected => _isStartSelected;
   bool get isEndSelected => _isEndSelected;
+  Color get cardColor => _cardColor;
 
   StationViewModel(String routeId) {
     // station view 의 경우 이전 단계에서 선택된 버스를 기반으로 구성되므로, 객체가 생성되는 동시에
@@ -31,14 +33,8 @@ class StationViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  void setUserStation(Station station) {
-    if (!_isStartSelected && !_isEndSelected) {
-      _start = station;
-      _isStartSelected = true;
-    } else if (_isStartSelected && !_isEndSelected) {
-      _end = station;
-      _isEndSelected = true;
-    }
+  void test() {
+    _cardColor = Colors.orange;
     notifyListeners();
   }
 }

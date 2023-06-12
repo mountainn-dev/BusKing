@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:busking/ViewModel/StationViewModel.dart';
 import 'package:busking/src/BusStationCard.dart';
-import 'package:busking/model/Station.dart';
+import 'package:busking/src/UserStation.dart';
 
 class SelectionStationPage extends StatelessWidget {
   final String routeId;
@@ -23,79 +23,48 @@ class SelectionStationPage extends StatelessWidget {
 class StationPage extends StatelessWidget {
   final String routeId;
 
-  StationPage({Key? key, required this.routeId}) : super(key: key);
+  const StationPage({Key? key, required this.routeId}) : super(key: key);
 
-  late StationViewModel viewModel;
-  late List<Station> station;
   @override
   Widget build(BuildContext context) {
-    viewModel = Provider.of<StationViewModel>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("BusKing"),
+        title: const Text("BusKing"),
       ),
       body: Padding(
-        padding: EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(10.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(
-              child: ScrollConfiguration(
-                behavior: MyScrollBehavior(),
-                child: ListView.builder(
-                    physics: BouncingScrollPhysics(),
-                    itemCount: viewModel.station.length,
-                    itemBuilder: (context, index) {
-                      return BusStationCard(
-                        station: viewModel.station[index]
-                      );},
-                ),
-              ),
-            ),
-
-            // TODO: 화면 하단 정류장 선택 결과 표시 부분
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Container(
-                        width: 150,
-                        color: Colors.grey.shade400,
-                        // 사용자 선택 출발 정류장
-                        child: Center(child: (viewModel.isStartSelected)
-                            ? Text("${viewModel.start.stationName}")
-                            : Text("")
-                        ),
-                      ),
+                 Expanded(
+                  child: ScrollConfiguration(
+                    behavior: MyScrollBehavior(),
+                    child: Consumer<StationViewModel>(
+                      builder: (context, viewModel, _) {
+                        return ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: viewModel.station.length,
+                          itemBuilder: (context, index) {
+                            return BusStationCard(
+                                station: viewModel.station[index]
+                            );},
+                        );
+                      },
+                      child: ListView(),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Container(
-                        width: 150,
-                        color: Colors.grey.shade400,
-                        // 사용자 선택 도착 정류장
-                        child: Center(child: (viewModel.isEndSelected)
-                            ? Text("${viewModel.end.stationName}")
-                            : Text("")
-                        ),
-                      ),
-                    )
-                  ],
+                  ),
                 ),
-                TextButton(
-                  onPressed: () {  },
-                  child: Text("확인"),
-                )
-              ],
-            )
+            // TODO: 화면 하단 정류장 선택 결과 표시 부분
+            Consumer<StationViewModel>(
+                builder: (context, viewModel, _) {
+                  return UserStation(viewModel: viewModel);
+                })
           ],
         )
       ),
     );
   }
 }
+
+
 
