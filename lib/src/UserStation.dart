@@ -21,7 +21,7 @@ class UserStation extends StatelessWidget {
                 color: Colors.grey.shade400,
                 // 사용자 선택 출발 정류장
                 child: Center(child: (viewModel.isStartSelected)
-                    ? Text(viewModel.start.stationName)
+                    ? Text(viewModel.start!.stationName)
                     : Text("")
                 ),
               ),
@@ -33,7 +33,7 @@ class UserStation extends StatelessWidget {
                 color: Colors.grey.shade400,
                 // 사용자 선택 도착 정류장
                 child: Center(child: (viewModel.isEndSelected)
-                    ? Text(viewModel.end.stationName)
+                    ? Text(viewModel.end!.stationName)
                     : Text("")
                 ),
               ),

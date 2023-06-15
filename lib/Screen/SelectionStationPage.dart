@@ -27,6 +27,7 @@ class StationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = Provider.of<StationViewModel>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text("BusKing"),
@@ -39,26 +40,18 @@ class StationPage extends StatelessWidget {
                  Expanded(
                   child: ScrollConfiguration(
                     behavior: MyScrollBehavior(),
-                    child: Consumer<StationViewModel>(
-                      builder: (context, viewModel, _) {
-                        return ListView.builder(
-                          physics: const BouncingScrollPhysics(),
-                          itemCount: viewModel.station.length,
-                          itemBuilder: (context, index) {
-                            return BusStationCard(
-                                station: viewModel.station[index]
-                            );},
-                        );
-                      },
-                      child: ListView(),
+                    child: ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: viewModel.station.length,
+                      itemBuilder: (context, index) {
+                        return BusStationCard(
+                            station: viewModel.station[index]
+                        );},
                     ),
                   ),
                 ),
             // TODO: 화면 하단 정류장 선택 결과 표시 부분
-            Consumer<StationViewModel>(
-                builder: (context, viewModel, _) {
-                  return UserStation(viewModel: viewModel);
-                })
+            UserStation(viewModel: viewModel)
           ],
         )
       ),

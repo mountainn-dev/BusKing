@@ -8,17 +8,15 @@ class StationViewModel with ChangeNotifier {
   late final RemoteRepository _remoteRepository;
   late final String _routeId;
   late List<Station> _station = [];
-  late Station _start;
-  late Station _end;
-  var _isStartSelected = false;
-  var _isEndSelected = false;
-  var _cardColor = Colors.white;
+  late Station? _start;   // UserStation 위젯에서 사용되기 위해 nullable 설정
+  late Station? _end;
+  bool _isStartSelected = false;
+  bool _isEndSelected = false;
   List<Station> get station => _station;
-  Station get start => _start;
-  Station get end => _end;
+  Station? get start => _start;
+  Station? get end => _end;
   bool get isStartSelected => _isStartSelected;
   bool get isEndSelected => _isEndSelected;
-  Color get cardColor => _cardColor;
 
   StationViewModel(String routeId) {
     // station view 의 경우 이전 단계에서 선택된 버스를 기반으로 구성되므로, 객체가 생성되는 동시에
@@ -33,8 +31,41 @@ class StationViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  void test() {
-    _cardColor = Colors.orange;
+  void setStartToEnd(Station station) {
+    if (_isStartSelected
+        && start!.stationName.compareTo(station.stationName) == 0
+    ) {
+      _unsetStart();
+    } else if (_isEndSelected
+        && end!.stationName.compareTo(station.stationName) == 0
+    ) {
+      _unsetEnd();
+    } else if (!_isStartSelected) {
+      _setStart(station);
+    } else if (!_isEndSelected) {
+      _setEnd(station);
+    }
     notifyListeners();
   }
+
+  void _setStart(Station station) {
+    _start = station;
+    _isStartSelected = true;
+  }
+
+  void _setEnd(Station station) {
+    _end = station;
+    _isEndSelected = true;
+  }
+
+  void _unsetStart() {
+    _start = null;
+    _isStartSelected = false;
+  }
+
+  void _unsetEnd() {
+    _end = null;
+    _isEndSelected = false;
+  }
+
 }
