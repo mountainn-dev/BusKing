@@ -9,6 +9,7 @@ class BusViewModel with ChangeNotifier {
   late List<Bus> _bus = [];
   List<Bus> get bus => _bus;
   late String _keyword;
+  bool _disposed = false;
 
   BusViewModel() {
     _remoteRepository = RemoteRepository();
@@ -20,6 +21,17 @@ class BusViewModel with ChangeNotifier {
 
   Future<void> loadBus() async {
     _bus = await _remoteRepository.getBus(_keyword);
-    notifyListeners();
+    _notifyListeners();
+  }
+
+  void _notifyListeners() {
+    if (!_disposed) {
+      notifyListeners();
+    }
+  }
+
+  @override void dispose() {
+    _disposed = true;
+    super.dispose();
   }
 }

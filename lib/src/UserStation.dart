@@ -41,8 +41,10 @@ class UserStation extends StatelessWidget {
           ],
         ),
         TextButton(
-          onPressed: () {  },
           child: const Text("확인"),
+          onPressed: () {
+
+          },
         )
       ],
     );

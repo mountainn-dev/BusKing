@@ -10,6 +10,7 @@ class StationViewModel with ChangeNotifier {
   late List<Station> _station = [];
   late Station? _start;   // UserStation 위젯에서 사용되기 위해 nullable 설정
   late Station? _end;
+  bool _disposed = false;
   bool _isStartSelected = false;
   bool _isEndSelected = false;
   List<Station> get station => _station;
@@ -28,7 +29,7 @@ class StationViewModel with ChangeNotifier {
 
   Future<void> _loadStation() async {
     _station = await _remoteRepository.getStation(_routeId);
-    notifyListeners();
+    _notifyListeners();
   }
 
   void setStartToEnd(Station station) {
@@ -45,7 +46,7 @@ class StationViewModel with ChangeNotifier {
     } else if (!_isEndSelected) {
       _setEnd(station);
     }
-    notifyListeners();
+    _notifyListeners();
   }
 
   void _setStart(Station station) {
@@ -66,6 +67,17 @@ class StationViewModel with ChangeNotifier {
   void _unsetEnd() {
     _end = null;
     _isEndSelected = false;
+  }
+
+  void _notifyListeners() {
+    if (!_disposed) {
+      notifyListeners();
+    }
+  }
+
+  @override void dispose() {
+    _disposed = true;
+    super.dispose();
   }
 
 }
